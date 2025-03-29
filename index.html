@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clima Rápido | Mantenimiento y Venta de Repuestos</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1e88e5;
+            --dark-blue: #0d47a1;
+            --white: #ffffff;
+            --red: #ff5252;
+            --whatsapp: #25D366;
+            --gmail: #D44638;
+            --green: #4CAF50;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--dark-blue) 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 100px 20px;
+            position: relative;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--white);
+            color: var(--dark-blue);
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            color: white;
+        }
+        
+        /* Emergency Banner */
+        .emergency-banner {
+            background: var(--red);
+            color: var(--white);
+            padding: 15px;
+            text-align: center;
+            margin: 30px 0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .emergency-banner i {
+            font-size: 1.8rem;
+        }
+        
+        .emergency-banner h2 {
+            margin-bottom: 5px;
+            font-size: 1.3rem;
+        }
+        
+        /* Services Section */
+        .services {
+            padding: 50px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            color: var(--dark-blue);
+            margin-bottom: 40px;
+            font-size: 2rem;
+        }
+        
+        .services-grid, .parts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        
+        .service-card, .part-card {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            border-top: 4px solid var(--primary);
+        }
+        
+        .service-card:hover, .part-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .service-icon, .part-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .part-icon {
+            color: var(--green);
+        }
+        
+        .service-card h3, .part-card h3 {
+            color: var(--dark-blue);
+            margin-bottom: 15px;
+        }
+        
+        /* Parts Section */
+        .parts {
+            padding: 50px 0;
+            background: #f9f9f9;
+        }
+        
+        /* Contact Section - SOLO INFORMACIÓN */
+        .contact-section {
+            padding: 50px 0;
+            text-align: center;
+        }
+        
+        .contact-section h2 {
+            color: var(--dark-blue);
+            margin-bottom: 20px;
+        }
+        
+        /* BOTONES FLOTANTES CORREGIDOS */
+        .floating-buttons {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 1000;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .floating-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            text-decoration: none;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .floating-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .floating-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .floating-btn:hover::after {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .whatsapp-btn {
+            background: var(--whatsapp);
+        }
+
+        .call-btn {
+            background: var(--primary);
+        }
+
+        .email-btn {
+            background: var(--gmail);
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                padding: 80px 20px;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .emergency-banner {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="images/logo.png" alt="Clima Rápido">
+                <h1>Clima Rápido</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="active">Inicio</a></li>
+                    <li><a href="servicios.html">Servicios</a></li>
+                    <li><a href="productos.html">Repuestos</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Mantenimiento y Venta de Repuestos para Electrodomésticos</h1>
+            <p>Servicio técnico especializado con garantía y repuestos originales</p>
+            <a href="tel:+51931574267" class="btn"><i class="fas fa-phone-alt"></i> Llamar ahora</a>
+        </section>
+
+        <!-- Emergency Banner -->
+        <div class="container">
+            <div class="emergency-banner">
+                <i class="fas fa-exclamation-triangle"></i>
+                <div>
+                    <h2>¡Servicio de Emergencia 24/7!</h2>
+                    <p>Para reparaciones urgentes de neveras y congeladores</p>
+                </div>
+                <a href="tel:+51931574267" class="btn"><i class="fas fa-phone-alt"></i> Llamar</a>
+            </div>
+        </div>
+
+        <!-- Services Section -->
+        <section class="services container">
+            <h2 class="section-title">Nuestros Servicios</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-snowflake"></i>
+                    </div>
+                    <h3>Neveras y Congeladores</h3>
+                    <p>Reparación de sistemas de refrigeración, cambio de compresores y mantenimiento preventivo.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <h3>Cocinas y Hornos</h3>
+                    <p>Reparación de hornillas, termostatos, temporizadores y sistemas eléctricos.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-wind"></i>
+                    </div>
+                    <h3>Aires Acondicionados</h3>
+                    <p>Mantenimiento preventivo, carga de gas, limpieza de filtros y reparación de unidades.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-fan"></i>
+                    </div>
+                    <h3>Ventiladores</h3>
+                    <p>Reparación de motores, cambio de aspas y mantenimiento general.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Parts Section -->
+        <section class="parts">
+            <div class="container">
+                <h2 class="section-title">Venta de Repuestos</h2>
+                <div class="parts-grid">
+                    <div class="part-card">
+                        <div class="part-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h3>Repuestos Originales</h3>
+                        <p>Contamos con repuestos originales para todas las marcas de electrodomésticos.</p>
+                    </div>
+                    
+                    <div class="part-card">
+                        <div class="part-icon">
+                            <i class="fas fa-box-open"></i>
+                        </div>
+                        <h3>Gran Inventario</h3>
+                        <p>Amplio stock de piezas para reparación inmediata.</p>
+                    </div>
+                    
+                    <div class="part-card">
+                        <div class="part-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Garantía en Repuestos</h3>
+                        <p>Todos nuestros repuestos incluyen garantía por escrito.</p>
+                    </div>
+                    
+                    <div class="part-card">
+                        <div class="part-icon">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <h3>Envío Rápido</h3>
+                        <p>Servicio de entrega express para repuestos urgentes.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section - SOLO INFORMACIÓN (sin botones) -->
+        <section class="contact-section">
+            <div class="container">
+                <h2 class="section-title">¿Necesitas ayuda?</h2>
+                <p>Estamos disponibles para asesorarte sobre servicios y repuestos</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <ul class="contact-info">
+                    <li><i class="fas fa-phone"></i> <a href="tel:+51931574267">931-574-267</a></li>
+                    <li><i class="fas fa-envelope"></i> <a href="mailto:altuveleonardo96@gmail.com.com">altuveleonardo96@gmail.com</a></li>
+                    <li><i class="fas fa-map-marker-alt"></i> Dirección: Calle Principal #123, Peru</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Horario</h4>
+                <p>Lunes a Viernes: 8:00 - 18:00</p>
+                <p>Sábado: 9:00 - 14:00</p>
+            </div>
+            <div class="footer-section">
+                <h4>Síguenos</h4>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Clima Rápido. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- ÚNICOS BOTONES DE CONTACTO (flotantes) -->
+    <div class="floating-buttons">
+        <a href="https://wa.me/51931574267" class="floating-btn whatsapp-btn" title="WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="tel:+51931574267" class="floating-btn call-btn" title="Llamar">
+            <i class="fas fa-phone-alt"></i>
+        </a>
+        <a href="mailto:servicio@climarapido.com" class="floating-btn email-btn" title="Gmail">
+            <i class="fas fa-envelope"></i>
+        </a>
+    </div>
+</body>
+</html>
