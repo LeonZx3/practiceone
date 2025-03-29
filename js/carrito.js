@@ -185,15 +185,18 @@ function renderizarCarrito() {
             itemElement.classList.add('out-of-stock');
         }
         
+        // Dentro de la función renderizarCarrito(), cambia esto:
         itemElement.innerHTML = `
+        <div class="cart-item-img-container">
             <img src="${item.imagen || 'images/default-product.jpg'}" alt="${item.nombre}">
-            <div class="cart-item-info">
-                <h4 class="cart-item-title">${item.nombre} ${sinStock ? '<span class="stock-label">(Agotado)</span>' : ''}</h4>
-                <p class="cart-item-price">$${item.precio.toFixed(2)} x ${item.cantidad} = $${subtotal.toFixed(2)}</p>
-            </div>
-            <button class="cart-item-remove remove-item" data-id="${item.id}" aria-label="Eliminar producto">
-                <i class="fas fa-trash"></i>
-            </button>
+        </div>
+        <div class="cart-item-info">
+            <h4 class="cart-item-title">${item.nombre} ${sinStock ? '<span class="stock-label">(Agotado)</span>' : ''}</h4>
+            <p class="cart-item-price">$${item.precio.toFixed(2)} x ${item.cantidad} = $${subtotal.toFixed(2)}</p>
+        </div>
+        <button class="cart-item-remove remove-item" data-id="${item.id}" aria-label="Eliminar producto">
+            <i class="fas fa-trash"></i>
+        </button>
         `;
         fragment.appendChild(itemElement);
     });
@@ -202,24 +205,63 @@ function renderizarCarrito() {
     cartTotal.textContent = `$${total.toFixed(2)}`;
 }
 
-// Enviar pedido por WhatsApp
+// Enviar pedido por WhatsApp - Versión mejorada para conversaciones nuevas
 function enviarPedidoWhatsApp() {
     if (carrito.length === 0) {
         mostrarNotificacion('El carrito está vacío', 'error');
         return;
     }
     
+    // Crear mensaje estructurado
     let mensaje = '¡Hola! Quiero hacer un pedido:\n\n';
+    mensaje += '📋 *Detalle del Pedido:*\n';
+    mensaje += '────────────────\n';
+    
     carrito.forEach(item => {
-        mensaje += `- ${item.nombre} (${item.cantidad} x $${item.precio.toFixed(2)}) = $${(item.cantidad * item.precio).toFixed(2)}\n`;
+        mensaje += `➡ ${item.nombre}\n`;
+        mensaje += `   Cantidad: ${item.cantidad}\n`;
+        mensaje += `   Precio unitario: $${item.precio.toFixed(2)}\n`;
+        mensaje += `   Subtotal: $${(item.cantidad * item.precio).toFixed(2)}\n\n`;
     });
 
     const total = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
-    mensaje += `\nTotal: $${total.toFixed(2)}\n\n`;
-    mensaje += 'Por favor, confirmen disponibilidad. ¡Gracias!';
+    mensaje += '────────────────\n';
+    mensaje += `💰 *Total a pagar:* $${total.toFixed(2)}\n\n`;
+    mensaje += 'Por favor, confirmen disponibilidad y forma de pago. ¡Gracias!';
+    
+    // Opción 1: Intentar abrir WhatsApp normalmente
+    const urlNormal = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
+    
+    // Opción 2: URL alternativa para web
+    const urlWeb = `https://web.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(mensaje)}`;
+    
+    // Primero intentamos con la versión normal
+    const ventanaWhatsApp = window.open(urlNormal, '_blank');
+    
+    // Si falla (se cierra inmediatamente), intentamos con la versión web
+    setTimeout(() => {
+        if (!ventanaWhatsApp || ventanaWhatsApp.closed) {
+            const ventanaWeb = window.open(urlWeb, '_blank');
+            
+            // Si ambas fallan, mostramos instrucciones
+            if (!ventanaWeb || ventanaWeb.closed) {
+                mostrarNotificacion('Por favor copia el mensaje y envíalo manualmente', 'error');
+                copiarAlPortapapeles(mensaje);
+            }
+        }
+    }, 500);
+}
 
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
-    window.open(url, '_blank');
+// Función auxiliar para copiar al portapapeles
+function copiarAlPortapapeles(texto) {
+    const textarea = document.createElement('textarea');
+    textarea.value = texto;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    
+    mostrarNotificacion('Mensaje copiado al portapapeles', 'success');
 }
 
 // Cargar carrito al iniciar
@@ -241,10 +283,10 @@ document.addEventListener('DOMContentLoaded', function() {
 // Función para cargar productos (debes implementarla según tu sistema)
 function cargarProductos() {
     return [
-        { id: 1, nombre: 'Producto 1', precio: 100, stock: 3, imagen: 'images/product1.jpg' },
-        { id: 2, nombre: 'Producto 2', precio: 200, stock: 5, imagen: 'images/product2.jpg' },
-        { id: 3, nombre: 'Producto 3', precio: 200, stock: 5, imagen: 'images/product2.jpg' },
-        { id: 4, nombre: 'Producto 4', precio: 200, stock: 5, imagen: 'images/product2.jpg' },
-        { id: 5, nombre: 'Producto 5', precio: 200, stock: 5, imagen: 'images/product2.jpg' }
+        { id: 1, nombre: 'Motor de nevera', precio: 130, stock: 3, imagen: 'images/filtro-aire.png' },
+        { id: 2, nombre: 'Motor de lavadora', precio: 85, stock: 5, imagen: 'images/lavador.png' },
+        { id: 3, nombre: 'Turbina de aire', precio: 70, stock: 5, imagen: 'images/turbina.jpeg' },
+        { id: 4, nombre: 'Capacitor', precio: 20, stock: 5, imagen: 'images/capacitor.png' },
+        { id: 5, nombre: 'Aspa de Ventilador', precio: 5, stock: 5, imagen: 'images/aspa.jpg' }
     ];
 }

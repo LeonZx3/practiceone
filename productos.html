@@ -160,7 +160,14 @@
             </div>
             <div class="cart-total">
                 <p>Total: <span id="cart-total">$0.00</span></p>
-                <button id="checkout-whatsapp" class="btn">Comprar por WhatsApp</button>
+                <button id="checkout-whatsapp" class="btn">
+                    <i class="fab fa-whatsapp"></i> Pedir por WhatsApp
+                </button>
+                <div id="whatsapp-options" style="display: none;">
+                    <button class="btn" onclick="enviarWhatsAppApp()">Abrir en App</button>
+                    <button class="btn" onclick="enviarWhatsAppWeb()">Abrir en Web</button>
+                    <button class="btn" onclick="copiarMensajeWhatsApp()">Copiar Mensaje</button>
+                </div>
             </div>
         </div>
     </div>
